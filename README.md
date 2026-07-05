@@ -73,8 +73,7 @@ essa origem.
 - **Persistência:** SQLite via EF Core — arquivo local, sem necessidade de
   servidor de banco de dados externo, e os dados sobrevivem ao fechar a
   aplicação.
-- **Nome e data de nascimento da pessoa:** o enunciado corta o texto logo
-  após o campo "Identificador" no cadastro de pessoa. Foram adicionados os
+- **Nome e data de nascimento da pessoa:**Foram adicionados os
   campos **Nome** (indispensável para identificar a pessoa na interface) e
   **Data de nascimento** (necessária para a regra de menor de idade).
 - **Validação de pessoa em transações:** a API rejeita a criação de uma
@@ -84,14 +83,3 @@ essa origem.
   aniversário do ano já ocorreu), implementado tanto no back-end
   (`Utils/DataUtils.cs`) quanto replicado no front-end
   (`src/utils/format.ts`) para dar feedback imediato antes de chamar a API.
-
-## Atenção ao rodar após esta atualização
-
-Como o projeto usa `Database.EnsureCreated()` (sem migrations do EF Core),
-o schema do banco só é criado automaticamente na **primeira** execução. Se
-você já tinha rodado uma versão anterior do projeto (sem o campo
-`DataNascimento`), apague o arquivo `gastos.db` (e os arquivos
-`gastos.db-shm` / `gastos.db-wal`, se existirem) dentro de
-`backend/GastosResidenciais.Api/` antes de rodar `dotnet run` novamente,
-para que a tabela `Pessoas` seja recriada com a nova coluna. Isso apaga os
-dados cadastrados até então.
