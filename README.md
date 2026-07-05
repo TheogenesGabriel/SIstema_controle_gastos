@@ -63,7 +63,7 @@ essa origem.
   despesas e saldo (receita − despesa) de cada uma, além do total geral
   (somando todas as pessoas) ao final.
 - **Regra de menor de idade:** pessoas com menos de 18 anos (calculado a
-  partir da `DataNascimento`) só podem ter **despesas** cadastradas —
+  partir da `DataNascimento`) só podem ter **despesas** cadastradas, em caso de
   tentativas de cadastrar uma receita para um menor são rejeitadas pela
   API com erro de validação (400), e a opção "Receita" já vem desabilitada
   no formulário do front-end quando a pessoa selecionada é menor de idade.
