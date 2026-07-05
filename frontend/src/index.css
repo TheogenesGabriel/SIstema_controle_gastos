@@ -1,0 +1,673 @@
+/* ==========================================================================
+   LIVRO-CAIXA — Design Tokens
+   Paleta "livro-caixa": papel + tinta + verde-floresta + dourado.
+   Mantém a mesma identidade visual do projeto original, apenas com
+   acabamento mais refinado (sombras, transições, estados de hover/foco).
+   ========================================================================== */
+
+:root {
+  /* Cores base */
+  --color-paper: #faf8f3;
+  --color-paper-alt: #f1ede2;
+  --color-ink: #649276;
+  --color-ink-soft: #7aaa91;
+  --color-forest: #83c5ab;
+  --color-forest-light: #CFE0BC;
+  --color-gold: #DBE4A9;
+  --color-gold-soft: #6d5316;
+  --color-receita: #22694f;
+  --color-despesa: #a13f2f;
+  --color-line: #d9d2c0;
+  --color-white: #ffffff;
+
+  /* Tipografia */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", "Courier New", monospace;
+
+  /* Forma e profundidade */
+  --radius: 6px;
+  --radius-sm: 3px;
+
+  --shadow-xs: 0 1px 2px rgba(28, 38, 32, 0.05);
+  --shadow-card: 0 1px 2px rgba(28, 38, 32, 0.06), 0 2px 14px rgba(28, 38, 32, 0.05);
+  --shadow-card-hover: 0 4px 10px rgba(28, 38, 32, 0.08), 0 10px 28px rgba(28, 38, 32, 0.09);
+  --shadow-focus: 0 0 0 3px rgba(184, 137, 43, 0.22);
+
+  /* Transições — uma curva única para consistência em todo o app */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 0.15s var(--ease);
+  --transition-base: 0.22s var(--ease);
+  --transition-slow: 0.35s var(--ease);
+
+  color-scheme: light;
+}
+
+/* ==========================================================================
+   Reset / base
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: radial-gradient(circle at 15% 0%, #fdfbf7 0%, var(--color-paper) 45%, var(--color-paper) 100%);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Foco elegante e consistente em qualquer elemento navegável por teclado */
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+  transition: outline-offset var(--transition-fast);
+}
+
+/* Seleção de texto personalizada, alinhada à paleta */
+::selection {
+  background: var(--color-gold-soft);
+  color: var(--color-ink);
+}
+
+/* Scrollbar personalizada (WebKit / Chromium) */
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-paper-alt);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-line);
+  border-radius: 999px;
+  border: 3px solid var(--color-paper-alt);
+  transition: background-color var(--transition-fast);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-gold);
+}
+
+/* Scrollbar personalizada (Firefox) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line) var(--color-paper-alt);
+}
+
+/* ==========================================================================
+   Layout
+   ========================================================================== */
+
+.app-shell {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 1.75rem 4rem;
+}
+
+/* Fade suave ao trocar de página/rota */
+.page {
+  animation: fade-in var(--transition-slow);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   Header / navegação
+   ========================================================================== */
+
+.app-header {
+  padding: 2.4rem 0 1.6rem;
+  border-bottom: 2px solid var(--color-ink);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.app-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 3.2rem;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.7rem;
+  background: linear-gradient(135deg, var(--color-ink) 30%, var(--color-forest) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.app-title .mark {
+  color: var(--color-gold);
+  font-size: 2.1rem;
+  display: inline-block;
+  -webkit-text-fill-color: var(--color-gold);
+  animation: float 3.5s ease-in-out infinite;
+  transition: transform var(--transition-base), color var(--transition-base);
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.app-title:hover .mark {
+  animation-play-state: paused;
+  transform: rotate(-8deg) scale(1.15);
+  color: var(--color-forest-light);
+  -webkit-text-fill-color: var(--color-forest-light);
+}
+
+.app-subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-ink-soft);
+  margin-top: 0.35rem;
+}
+
+.app-nav {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+  margin-top: 1.5rem;
+}
+
+.app-nav a {
+  position: relative;
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  padding: 0.7rem 1.3rem;
+  color: var(--color-ink-soft);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast), background-color var(--transition-fast),
+    border-color var(--transition-fast), box-shadow var(--transition-fast),
+    transform var(--transition-fast);
+}
+/* Indicador animado: uma linha dourada que "cresce" a partir do centro */
+.app-nav a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 2px;
+  width: calc(100% - 1.6rem);
+  height: 2px;
+  background: var(--color-gold);
+  border-radius: 999px;
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  transition: transform var(--transition-base);
+}
+
+.app-nav a:hover::after {
+  transform: translateX(-50%) scaleX(0.6);
+}
+
+.app-nav a.active::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+.app-nav a:hover {
+  color: var(--color-ink);
+  background: var(--color-paper-alt);
+  transform: translateY(-1px);
+}
+
+.app-nav a.active {
+  color: var(--color-forest);
+  background: var(--color-white);
+  border-color: var(--color-line);
+  box-shadow: var(--shadow-xs);
+}
+
+/* ==========================================================================
+   Cards / seções
+   ========================================================================== */
+
+.card {
+  background: var(--color-white);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: 1.5rem 1.6rem;
+  margin-bottom: 1.75rem;
+  animation: card-in var(--transition-slow) both;
+  transition: box-shadow var(--transition-base), transform var(--transition-base),
+    border-color var(--transition-base);
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Cascata: cada card seguinte entra com um pequeno atraso */
+.card:nth-of-type(1) {
+  animation-delay: 0s;
+}
+.card:nth-of-type(2) {
+  animation-delay: 0.06s;
+}
+.card:nth-of-type(3) {
+  animation-delay: 0.12s;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-card-hover);
+  border-color: #cfc6ad;
+  transform: translateY(-2px);
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.card-title .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--color-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border: 1px solid var(--color-gold-soft);
+  padding: 0.15rem 0.45rem;
+  border-radius: 2px;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.card-title .eyebrow:hover {
+  background: var(--color-gold-soft);
+  color: var(--color-ink);
+}
+
+/* ==========================================================================
+   Formulários
+   ========================================================================== */
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: flex-end;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+  min-width: 140px;
+}
+
+.field label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-soft);
+  transition: color var(--transition-fast);
+}
+
+.field input,
+.field select {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.field input:hover,
+.field select:hover {
+  border-color: #c7bea3;
+}
+
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: var(--color-forest-light);
+  background: var(--color-white);
+  box-shadow: var(--shadow-focus);
+}
+
+.field:focus-within label {
+  color: var(--color-forest);
+}
+
+/* ==========================================================================
+   Botões
+   ========================================================================== */
+
+.btn {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+  padding: 0.62rem 1.15rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-forest);
+  background: var(--color-forest);
+  color: var(--color-white);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast),
+    box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--color-forest-light);
+  border-color: var(--color-forest-light);
+  box-shadow: 0 3px 10px rgba(31, 61, 51, 0.25);
+  transform: translateY(-1px);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-despesa);
+  border: 1px solid var(--color-line);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: #fbeeec;
+  border-color: var(--color-despesa);
+  box-shadow: 0 3px 10px rgba(161, 63, 47, 0.15);
+}
+
+.error-msg {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-despesa);
+  margin-top: 0.5rem;
+  animation: fade-in var(--transition-base);
+}
+
+/* ==========================================================================
+   Tabela estilo "livro-caixa"
+   ========================================================================== */
+
+.ledger {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.ledger thead th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-soft);
+  border-bottom: 2px solid var(--color-ink);
+  padding: 0.5rem 0.6rem;
+}
+
+.ledger td {
+  padding: 0.65rem 0.6rem;
+  border-bottom: 1px solid var(--color-line);
+  vertical-align: middle;
+  transition: background-color var(--transition-fast);
+}
+
+.ledger tbody tr {
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.ledger tbody tr:hover {
+  background: var(--color-paper-alt);
+}
+
+.ledger tbody tr:hover td:first-child {
+  color: var(--color-forest);
+}
+
+.num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.18rem 0.5rem;
+  border-radius: 2px;
+  display: inline-block;
+  transition: transform var(--transition-fast);
+}
+
+.tag:hover {
+  transform: scale(1.05);
+}
+
+.tag-receita {
+  color: var(--color-receita);
+  background: #e4f2ea;
+}
+
+.tag-despesa {
+  color: var(--color-despesa);
+  background: #f7e7e4;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  color: var(--color-ink-soft);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  padding: 0.25rem 0.4rem;
+  border-radius: 2px;
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.icon-btn:hover {
+  color: var(--color-despesa);
+  background: #f7e7e4;
+}
+
+.empty-state {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-ink-soft);
+  padding: 1.5rem 0.6rem;
+  text-align: center;
+  border: 1px dashed var(--color-line);
+  border-radius: var(--radius);
+  transition: border-color var(--transition-base), color var(--transition-base);
+}
+
+.empty-state:hover {
+  border-color: var(--color-gold-soft);
+  color: var(--color-ink);
+}
+
+/* ==========================================================================
+   Resumo de totais
+   ========================================================================== */
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.summary-box {
+  background: var(--color-forest);
+  color: var(--color-white);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.3rem;
+  box-shadow: var(--shadow-card);
+  animation: card-in var(--transition-slow) both;
+  transition: box-shadow var(--transition-base), transform var(--transition-base);
+}
+
+.summary-box:nth-of-type(1) {
+  animation-delay: 0s;
+}
+.summary-box:nth-of-type(2) {
+  animation-delay: 0.06s;
+}
+.summary-box:nth-of-type(3) {
+  animation-delay: 0.12s;
+}
+
+.summary-box:hover {
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+.summary-box.despesa {
+  background: var(--color-ink);
+}
+
+.summary-box.saldo {
+  background: var(--color-gold);
+  color: var(--color-ink);
+}
+
+.summary-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.8;
+}
+
+.summary-value {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 0.3rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.total-row {
+  font-weight: 600;
+  background: var(--color-paper-alt);
+}
+
+.total-row td {
+  border-top: 2px solid var(--color-ink);
+  border-bottom: none;
+}
+
+/* ==========================================================================
+   Responsividade
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .app-shell {
+    padding: 0 1.1rem 3rem;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ledger {
+    font-size: 0.82rem;
+  }
+
+  .form-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .card:hover {
+    transform: none;
+  }
+
+}
