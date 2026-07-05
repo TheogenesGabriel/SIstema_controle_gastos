@@ -75,7 +75,7 @@ essa origem.
 - **Persistência:** SQLite via EF Core — arquivo local, sem necessidade de
   servidor de banco de dados externo, e os dados sobrevivem ao fechar a
   aplicação.
-- **Nome e data de nascimento da pessoa:**Foram adicionados os
+- **Nome e data de nascimento da pessoa:** Foram adicionados os
   campos **Nome** (indispensável para identificar a pessoa na interface) e
   **Data de nascimento** (necessária para a regra de menor de idade).
 - **Validação de pessoa em transações:** a API rejeita a criação de uma
