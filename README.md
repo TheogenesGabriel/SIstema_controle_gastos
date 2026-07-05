@@ -1,4 +1,4 @@
-# Livro-Caixa — Controle de Gastos Residenciais
+# (Livro Caixa) — Controle de Gastos Residenciais
 
 Sistema de controle de gastos residenciais com cadastro de pessoas,
 cadastro de transações (receitas/despesas) e consulta de totais.
