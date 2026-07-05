@@ -6,7 +6,7 @@ cadastro de transações (receitas/despesas) e consulta de totais.
 - **Back-end:** .NET 8 (ASP.NET Core Web API) + Entity Framework Core + SQLite
 - **Front-end:** React + TypeScript (Vite)
 
-  
+![Layout do Sistema](img_proj/layoult.png)
 
 ## Estrutura
 
